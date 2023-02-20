@@ -1,0 +1,178 @@
+﻿@using Microsoft.AspNet.Identity
+@model UserAuthentication.Models.IndexViewModel
+<style>
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: #f6d365;
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+    }
+
+    .dropbtn {
+        /*background-color: #4CAF50;*/
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 130px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        //background-color: #3e8e41;
+    }
+</style>
+
+<section class="vh-100" style=" margin: auto; width: 52%; margin-top: 15px; border: 3px solid; border-color: dodgerblue; padding: 10px; background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 gradient-custom text-center text-white"
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <div class="dropdown">
+                                @if (Model.applicationUsers.Picture != null)
+                                {
+                                    <img src="~/Images/@Model.applicationUsers.Picture"
+                                         alt="Avatar" class="img-fluid my-5 dropbtn" style=" width: 122px; height: 112px; margin-top: 20px; border-radius: 58px;" />
+                                }
+                                else
+                                {
+                                    <button style=" border: none; border-radius: 63px; margin-top: 3px; }">
+                                        <img src="~/Images/no_profile.png"
+                                             alt="Avatar" class="img-fluid my-5" style=" width: 110px; margin-top: 4px; border-radius: 56px;" />
+                                    </button>
+                                }
+                                <div class=" dropdown-content">
+                                    <a href="https://localhost:44307/Manage/EditProfile">
+
+                                        <img src="~/Backgroundimage/Edit_Profile.jpg" width="20" height="15" style=" margin-right: 5px;" />EDIT PROFILE
+                                    </a>
+                                    <a href="https://localhost:44307/OrderViewModel/OrderDetails">
+                                        <img src=""
+                                             width="20" height="15"> ORDER DETAILS
+                                    </a>
+                                    @*<a href="#">
+                                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20200630132503/iflag.jpg"
+                                             width="20" height="15"> Edit Profile
+                                    </a>*@
+                                </div>
+                            </div>
+
+                            @if (Model.applicationUsers.FirstName != null || Model.applicationUsers.LastName != null)
+                            {
+                                <h5>@Model.applicationUsers.FirstName @Model.applicationUsers.LastName</h5>
+                            }
+                            else
+                            {
+                                <h5>@Model.applicationUsers.UserName</h5>
+                            }
+                            <p>SOFTWARE DEVELOPER</p>
+                            <i class="far fa-edit mb-5"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <h6 style=" margin-left: 38%; font-size: 17px;">Information</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1 " style=" display: flex; justify-content: space-between;">
+                                    <div class="col-6 mb-3">
+                                        <h6 style=" margin-left: 38%; font-size: 17px;">Email</h6>
+                                        <p class="text-muted"><b>@Model.applicationUsers.Email</b></p>
+                                    </div>
+                                    @if (Model.applicationUsers.PhoneNumber != null)
+                                    {
+                                        <div class="col-6 mb-3">
+                                            <h6 style=" margin-left: 38%; font-size: 17px;">Phone</h6>
+                                            <p class="text-muted"><b>@Model.applicationUsers.PhoneNumber</b></p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-6 mb-3">
+                                            <h6 style=" margin-left: 38%; font-size: 17px;">Phone</h6>
+                                            <p class="text-muted" style="width: 100%; ">You have not ad your mobile_no.</p>
+                                        </div>
+                                    }
+                                </div>
+                                <h6 style=" margin-left: 40%; font-size: 17px;">Projects</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1" style=" display: flex; justify-content: space-between;">
+                                    <div class="col-6 mb-3">
+                                        <h6 style=" font-size: 17px;">Recent</h6>
+                                        @if (Model.bids.Count() != 0)
+                                        {
+                                            foreach (var item in Model.bids)
+                                            {
+                                                <p class="text-muted">@item.projectName</p>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p class="text-muted">No Project</p>
+                                        }
+                                    </div>
+
+                                    <div class="col-6 mb-3">
+                                        <h6 style=" font-size: 17px;">STATUS</h6>
+                                        @foreach (var item in Model.bids)
+                                        {
+                                            switch (item.Status)
+                                            {
+                                                case "Accepted":
+                                                    <p style="color: darkgreen"><b> @Html.DisplayFor(modelItem => item.Status)</b></p>
+                                                    break;
+
+                                                case "Rejected":
+                                                    <p style="color:darkred"><b> @Html.DisplayFor(modelItem => item.Status)</b></p>
+                                                    break;
+                                                default:
+                                                    <p><b> @Html.DisplayFor(modelItem => item.Status)</b></p>
+                                                    break;
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start">
+                                    <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                    <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                    <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

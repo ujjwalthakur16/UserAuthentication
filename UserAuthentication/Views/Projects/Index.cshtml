@@ -1,0 +1,226 @@
+﻿@model IEnumerable<UserAuthentication_.Models.Project>
+@using Microsoft.AspNet.Identity;
+
+@*@using UserAuthentication.Models;*@
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<style>
+    .Links {
+        margin: 10px;
+    }
+
+    .status {
+        color: darkgreen;
+    }
+
+    .redColor {
+        color: darkred;
+    }
+</style>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert("@ViewBag.Message");
+                    }
+    </script>
+}
+<p>
+    @if (User.IsInRole("Employer") || User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            <b>Documents</b>
+        </th>
+        <th>
+            <b>Bid Accepted Of</b>
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @switch (item.Status)
+                    {
+                        case "Accepted":
+                            <div class="status">
+                                <b> @Html.DisplayFor(modelItem => item.Status)</b>
+                            </div>
+                            break;
+                        default:
+                            <div class="redColor">
+                                <b> @Html.DisplayFor(modelItem => item.Status)</b>
+                            </div>
+                            break;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Documents", "Documents", "PRojectDocument", new { id = item.Id }, null)
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.BidAcceptedof)
+
+                </td>
+                <td>
+                    @if (User.IsInRole("Employer") || User.IsInRole("Admin"))
+                    {
+                        <div>
+                            <span class="Links"> @Html.ActionLink("Edit", "Edit", new { id = item.Id })</span>
+                        </div>
+                        <div>
+                            <span class="Links"> @Html.ActionLink("Details", "Details", new { id = item.Id })</span>
+                        </div>
+                        <div>
+                            <span class="Links">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</span>
+                        </div>
+                        <div>
+                            <span class="Links">@Html.ActionLink("CheckBids", "Checkbids", "Bids", new { id = item.Id }, null)</span>
+
+                        </div>
+                        <div>
+                            <span>@Html.ActionLink("Add Documents", "Create", "PRojectDocument", new { id = item.Id }, null) </span>
+                        </div>
+
+                    }
+                    else
+                    {
+                        if (item.Status != "Accepted")
+                        {
+                            @Html.ActionLink("Bid", "Create", "Bids", new { id = item.Id, uid = item.UserId }, null)
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Checkbids", "Checkbid", "Bids", new { id = item.Id, uid = item.UserId }, null)
+                        }
+                    }
+
+                </td>
+            </tr>
+
+        }
+        else if (User.Identity.GetUserId() == item.UserId || User.IsInRole("Job Seeker"))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @switch (item.Status)
+                    {
+                        case "Accepted":
+                            <div class="status">
+                                <b> @Html.DisplayFor(modelItem => item.Status)</b>
+                            </div>
+                            break;
+                        default:
+                            <div class="redColor">
+                                <b> @Html.DisplayFor(modelItem => item.Status)</b>
+                            </div>
+                            break;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Documents", "Documents", "PRojectDocument", new { id = item.Id }, null)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.BidAcceptedof)
+                </td>
+                <td>
+                    @if (User.IsInRole("Employer") || User.IsInRole("Admin"))
+                    {
+                        <div>
+                            <span class="Links"> @Html.ActionLink("Edit", "Edit", new { id = item.Id })</span>
+                        </div>
+                        <div>
+                            <span class="Links"> @Html.ActionLink("Details", "Details", new { id = item.Id })</span>
+
+                        </div>
+                        <div>
+                            <span class="Links">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</span>
+                        </div>
+                        <div>
+                            <span class="Links">@Html.ActionLink("CheckBids", "Checkbids", "Bids", new { id = item.Id }, null)</span>
+
+                        </div>
+                        <div>
+                            <span>@Html.ActionLink("Add Documents", "Create", "PRojectDocument", new { id = item.Id }, null) </span>
+                        </div>
+
+                    }
+                    else
+                    {
+
+                        if (item.Status != "Accepted")
+                        {
+                            @Html.ActionLink("Bid", "Create", "Bids", new { id = item.Id, uid = item.UserId }, null)
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Checkbids", "Checkbid", "Bids", new { id = item.Id, uid = item.UserId }, null)
+                        }
+                    }
+
+                </td>
+            </tr>
+        }
+    }
+
+</table>

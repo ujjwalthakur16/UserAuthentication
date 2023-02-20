@@ -1,0 +1,171 @@
+﻿@model IEnumerable<UserAuthentication.Models.SubCategory>
+
+<h2>Books</h2>
+
+@{
+    ViewBag.Title = "Details";
+}
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+
+<div class="col-12 row m-3">
+    <div class="col-6 offset-2">
+        <input id="search" type="search" value="" placeholder="Search Book By Category" class="form-control" />
+    </div>
+    <div class="col-3">
+        <button type="submit" onclick="SearchValue()" class="btn btn-info text-white">Search</button>
+    </div>
+</div>
+
+<div class="row" id="displayfilterdetail">
+
+</div>
+
+<div class="row" id="cardDetail">
+
+    @foreach (var product in Model)
+    {
+        <div class="card col-lg-3 col-md-6" id="@product.ID" style="margin:10px">
+            <div class="row p-2">
+                <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
+                    <div class="card" style="border:0px;">
+
+                        @*@switch (product.Name)
+                        {
+                            case ("Romantic Books"):
+                                if (product.Picture != null)
+                                {
+                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/sub/@product.Picture" />
+
+                                }
+                                else
+                                {
+
+                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/Subcatogeries/half-girlfriend.jpg" />
+                                }
+                                break;
+
+                            case ("Action Games"):
+                                if (product.Picture != null)
+
+                                {
+                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/Categories/@product.Picture" />
+
+                                }
+                                else
+                                {
+
+                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 8%; height: 10pc;" src="~/Subcatogeries/Pubg.jpg" />
+                                }
+                                break;
+                        }*@
+                        @if (product.Picture != null)
+
+                        {
+                            <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/Subcatogeries/@product.Picture" />
+
+                        }
+                        else
+                        {
+                            <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 8%; height: 10pc;" src="~/Images/No_Image.png" />
+                        }
+                        <div class="pl-1">
+                            <p class="card-title h5"><b style=" margin-left: 38%; font-size: 23px; color: #2c3e50">@product.Name</b></p>
+                            @if (product.CreatedBy != null)
+                            {
+                                <p class="card-title text-primary">by <b>@product.CreatedBy</b></p>
+
+                            }
+                            else
+                            {
+                                <p class="card-title text-primary">by <b>Unknown </b></p>
+
+                            }
+                        </div>
+
+                    </div>
+                    <div>
+                        @*@Html.ActionLink("Deatails", "Details", new { id = product.ID  })*@
+                        @Html.ActionLink("Details", "Menu", "Products", new { id = product.ID }, new { @class = "btn btn-primary form-control" })
+                        <span class="Links"> @Html.ActionLink("Edit", "Edit", new { id = product.ID })</span>
+
+                        @*<a href="/Products/Menu/@product.ID" class="btn btn-primary form-control">Details</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+    <a href="/Categories/Index">Back to List</a>
+
+
+@section scripts{
+    <script>
+        function SearchValue() {
+            var searchvalue = document.getElementById('search').value;
+            if (searchvalue == "") {
+                swal({
+                    title: "Sorry",
+                    text: "Please enter the category name",
+                    button: true,
+                    icon: "warning",
+                    dangerModel: true,
+                    timer: 1500
+                });
+            }
+            else {
+                // alert("the value is" + searchvalue);
+                $.ajax({
+                    url: "/Customer/Home/Search",
+                    type: "get",
+                    success: function (data) {
+                        swal({
+                            title: "Done",
+                            text: "Category filtered",
+                            button: true,
+                            icon: "success",
+                            dangerModel: true,
+                            timer: 1500
+                        });
+                        var categoryId = 0;
+                        for (var value of data.datacategory) {
+                            if (searchvalue == value.name) {
+                                categoryId = value.id;
+                                break;
+                            }
+                        }
+                        console.log(categoryId);
+                        if (categoryId != 0) {
+                            for (var value of data.data) {
+                                if (value.categoryId != categoryId) {
+                                    document.getElementById(`${value.id}`).style.display = 'none';
+                                }
+                            }
+                        }
+                        else {
+                            swal({
+                                title: "Oops",
+                                text: "Book category not available",
+                                button: true,
+                                icon: "error",
+                                dangerModel: true,
+                                timer: 1500
+                            });
+                        }
+
+                    }
+                });
+            }
+
+
+        }
+
+    </script>
+
+} 

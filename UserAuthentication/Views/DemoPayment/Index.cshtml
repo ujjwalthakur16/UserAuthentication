@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNet.Identity
+@model UserAuthentication.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<form action="https://test.payu.in/_payment" method="post" id="payment_form">
+    <input type="hidden" id="udf5" name="udf5" value="payu_paisa" />
+    <input type="hidden" id="udf1" name="udf1" value="91" />
+    <input type="hidden" id="surl" name="surl" value="https://localhost:44301/Payment/PaymentSuccess" />
+    <input type="hidden" id="furl" name="furl" value="https://localhost:44301/Payment/PaymentFailed" />
+    <div class="dv">
+        <span class="text"><label>Merchant Key:</label></span>
+        <span><input type="password" id="key" name="key" placeholder="Enter your Merchant Key" value="" /></span>
+        <input type="text" id="key" name="service_provider" value="payu_paisa" />
+    </div>
+    <div class="dv">
+        <span class="text"><label>Merchant Salt:</label></span>
+        <span><input type="password" id="salt" name="salt" placeholder="Enter your Merchant Salt" value="" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>Transaction/Order ID:</label></span>
+        <span><input type="text" id="txnid" name="txnid" placeholder="Transaction ID" value="12345" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>Amount:</label></span>
+        <span><input type="text" id="amount" name="amount" placeholder="Amount" value="1.00" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>Product Info:</label></span>
+        <span><input type="text" id="pinfo" name="productinfo" placeholder="Product Info" value="P01" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>First Name:</label></span>
+        <span><input type="text" id="fname" name="firstname" placeholder="First Name" value="Code2night" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>Email ID:</label></span>
+        <span><input type="text" id="email" name="email" placeholder="Enter Email ID" value="" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>Mobile/Cell Number:</label></span>
+        <span><input type="text" id="mobile" name="phone" placeholder="Mobile/Cell Number" value="6767788999" /></span>
+    </div>
+    <div class="dv">
+        <span class="text"><label>Hash:</label></span>
+        <span><input type="text" id="hash" name="hash" placeholder="Hash" value="" /></span>
+    </div>
+    <div id="alertinfo" class="dv"></div>
+    <div><input type="submit" value="Pay" /></div>
+</form>
+<script>
+    $('#payment_form').bind('keyup blur', function () {
+        $.ajax({
+            url: '/Home/hash',
+            type: 'post',
+            data: JSON.stringify({
+                key: $('#key').val(),
+                salt: $('#salt').val(),
+                txnid: $('#txnid').val(),
+                amount: $('#amount').val(),
+                productinfo: $('#pinfo').val(),
+                firstname: $('#fname').val(),
+                email: $('#email').val(),
+                mobile: $('#mobile').val(),
+                udf5: $('#udf5').val(),
+                udf1: $('#udf1').val(),
+            }),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                $('#hash').val(json);
+            }
+        });
+    });
+</script>
+
+

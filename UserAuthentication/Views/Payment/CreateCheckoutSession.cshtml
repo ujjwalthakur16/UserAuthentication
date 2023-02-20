@@ -1,0 +1,14 @@
+﻿@model UserAuthentication.Models.ApplicationUser
+@{
+    ViewBag.Title = "CreateCheckoutSession";
+}
+<button data-stripe-checkout>Pay with Stripe</button>
+<h2>CreateCheckoutSession</h2>
+var stripe = Stripe("pk_test_51MLiGtSJmKyYkUyEt5UICsVwuyGMRZW4iAhngWGRmsXAtsGivp1D3oL8pu4PxEiFRlM6q9o8rcKZJi5eCZomeUfd009ckOqwz1");
+
+var checkoutButton = document.querySelector('[data-stripe-checkout]');
+checkoutButton.addEventListener('click', function () {
+  stripe.redirectToCheckout({
+    sessionId: '{{@Model.Id}}'
+  });
+});

@@ -1,0 +1,121 @@
+﻿@model UserAuthentication.Models.Products
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Products</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategory.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_by)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_by)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MRP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MRP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountFromDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountFromDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountToDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountToDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Picture)
+        </dt>
+
+        <dd>
+            @if (Model.Picture != null)
+            {
+                <img style="height: 100px; width: 100px;" src="~/Images/@Model.Picture" />
+            }
+            else
+            {
+                <img style="height: 100px; width: 100px;" src="~/Images/No_Image.png" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
