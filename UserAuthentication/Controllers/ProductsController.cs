@@ -96,11 +96,13 @@ namespace UserAuthentication.Controllers
             ViewBag.SubCategoryId = new SelectList(db.SubCategory, "ID", "Name", products.SubCategoryId);
             return View(products);
         }
+
         //[HttpGet]
         //public ActionResult Search()
         //{
         //    return Json(new { data = db.Products.ToList(), datacategory = db.Category.ToList() });
         //}
+
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
