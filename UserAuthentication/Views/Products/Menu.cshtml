@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<UserAuthentication.Models.Products>
 <head>
     <script>
-const { data } = require("jquery");
+        const { data } = require("jquery");
 
-        
+
         function SearchValue() {
             var searchvalue = document.getElementById('search').value;
             if (searchvalue == "") {
@@ -18,11 +18,11 @@ const { data } = require("jquery");
                 });
             }
             else {
-                
+
                 alert("the value is " + searchvalue);
                 debugger;
                 $.ajax({
-                    
+
                     type: "get",
                     url: "/Products/Search",
                     success: function (data) {
@@ -137,7 +137,6 @@ const { data } = require("jquery");
                     <div>
                         <a href="@Url.Action("AddToCart","Carts",new { id = product.ID })" class="btn btn-primary form-control">
                             <span class="glyphicon glyphicon-shopping-cart">ADD TO CART </span>
-
                         </a>
                         @Html.ActionLink("Edit", "Edit", new { id = product.ID })
 
@@ -148,7 +147,7 @@ const { data } = require("jquery");
     }
 
     @*@Html.ActionLink("Back to List", "Menu", "SubCategories", new { id= Model.FirstOrDefault().SubCategoryId})*@
-    
+
 </div>
 <div>
 

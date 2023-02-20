@@ -267,7 +267,7 @@
                 <ul class="nav navbar-nav navbar-left">
                     <li><a href="#about">ABOUT</a></li>
                     <li>@Html.ActionLink("Project", "Index", "Projects")</li>
-                    <li><a href="#portfolio">PORTFOLIO</a></li>
+                    @*<li><a href="#portfolio">PORTFOLIO</a></li>*@
                     @if (User.Identity.IsAuthenticated)
                     {
                         if (Model.subscription == null)
@@ -279,6 +279,7 @@
                     {
                         <li><a href="#subscription">SUBSCRIPTION</a></li>
                     }
+                    <li><a href="#contact">CONTACT US</a></li>
                     <li><a href="/Categories/Index">Buy Products</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -415,10 +416,10 @@
             </div>*@
 
         <!-- Container (Portfolio Section) -->
-        <div id="portfolio" class="container-fluid text-center bg-grey">
-            <h2>Portfolio</h2><br>
+        <!--<div id="portfolio" class="container-fluid text-center bg-grey">-->
+        @*<h2>Portfolio</h2><br>
             <h4>What I have created</h4>
-            <div class="row text-center slideanim">
+            <div class="row text-center ">
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="some.jpg" alt="german vocab drill site" width="400" height="300">
@@ -440,64 +441,13 @@
                         <p>A peer-sharing platform for non-English speaking children in rural India</p>
                     </div>
                 </div>
-            </div><br>
+            </div>*@
+        <!--<br>
+        </div>-->
 
-            @if (User.Identity.IsAuthenticated)
-            {
-                if (Model.subscription == null)
-                {
-                    <!-- Container (Pricing Section) -->
-                    <div id="subscription" class="container-fluid">
-                        <div class="text-center">
-                            <h2>SUBSCRIPTION</h2>
-                            <h4>Choose a payment plan that works for you</h4>
-                        </div>
-
-                        <div class="col-sm-6 col-xs-12">
-                            <div class="panel panel-default text-center">
-                                <div class="panel-heading">
-                                    <h1>Pro</h1>
-                                </div>
-                                <div class="panel-body">
-                                    <p><strong>Small</strong> (1-3 members) partner teams</p>
-                                    <p>New <strong>startup</strong> (0-1 year)</p>
-                                    <p>Develop <strong>1</strong> solution</p>
-                                    <p><strong>2</strong> weekly 1-hour online or offline meetings<a href="#tc">*</a></p>
-
-                                    <p><strong>Unlimited</strong> design pivots</p>
-                                </div>
-                                <div class="panel-footer">
-                                    <h3>299.00 INR</h3>
-                                    <h4>per Month</h4>
-                                    <input type="button" class="btn btn-lg"  value ="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("index", "Payment" ) + "'");" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xs-12">
-                            <div class="panel panel-default text-center">
-                                <div class="panel-heading">
-                                    <h1>Premium</h1>
-                                </div>
-                                <div class="panel-body">
-                                    <p><strong>Small</strong> (0-15 members) design + tech team</p>
-                                    <p><strong>Unlimited</strong> design pivots</p>
-
-                                    <p>Up to <strong>3</strong> development pivots</p>
-                                    <p>Up to <strong>6</strong> months</p>
-                                    <p><strong>3</strong> weekly 1-hour online or offline meetings<a href="#tc">*</a></p>
-                                </div>
-                                <div class="panel-footer">
-                                    <h3>999.00 INR</h3>
-                                    <h4>per Year</h4>
-                                    <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("PremiumPlan", "Plans", new {totalCost= 999.00} ) + "'");" />
-                                    @*<button class="btn btn-lg">Contact</button>*@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-            else
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (Model.subscription == null)
             {
                 <!-- Container (Pricing Section) -->
                 <div id="subscription" class="container-fluid">
@@ -522,11 +472,10 @@
                             <div class="panel-footer">
                                 <h3>299.00 INR</h3>
                                 <h4>per Month</h4>
-                                <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("Index", "DemoPayment" ) +  "'");" />
+                                <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("index", "Payment" ) + "'");" />
                             </div>
                         </div>
                     </div>
-
                     <div class="col-sm-6 col-xs-12">
                         <div class="panel panel-default text-center">
                             <div class="panel-heading">
@@ -543,14 +492,68 @@
                             <div class="panel-footer">
                                 <h3>999.00 INR</h3>
                                 <h4>per Year</h4>
-                                <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("CreateCheckoutSession", "Payment" ) + "'");" />
+                                <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("PremiumPlan", "Plans", new {totalCost= 999.00} ) + "'");" />
                                 @*<button class="btn btn-lg">Contact</button>*@
                             </div>
                         </div>
                     </div>
                 </div>
             }
-        </div>
+        }
+        else
+        {
+            <!-- Container (Pricing Section) -->
+            <div id="subscription" class="container-fluid">
+                <div class="text-center">
+                    <h2>SUBSCRIPTION</h2>
+                    <h4>Choose a payment plan that works for you</h4>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <h1>Pro</h1>
+                        </div>
+                        <div class="panel-body">
+                            <p><strong>Small</strong> (1-3 members) partner teams</p>
+                            <p>New <strong>startup</strong> (0-1 year)</p>
+                            <p>Develop <strong>1</strong> solution</p>
+                            <p><strong>2</strong> weekly 1-hour online or offline meetings<a href="#tc">*</a></p>
+
+                            <p><strong>Unlimited</strong> design pivots</p>
+                        </div>
+                        <div class="panel-footer">
+                            <h3>299.00 INR</h3>
+                            <h4>per Month</h4>
+                            <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("Index", "DemoPayment" ) +  "'");" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <h1>Premium</h1>
+                        </div>
+                        <div class="panel-body">
+                            <p><strong>Small</strong> (0-15 members) design + tech team</p>
+                            <p><strong>Unlimited</strong> design pivots</p>
+
+                            <p>Up to <strong>3</strong> development pivots</p>
+                            <p>Up to <strong>6</strong> months</p>
+                            <p><strong>3</strong> weekly 1-hour online or offline meetings<a href="#tc">*</a></p>
+                        </div>
+                        <div class="panel-footer">
+                            <h3>999.00 INR</h3>
+                            <h4>per Year</h4>
+                            <input type="button" class="btn btn-lg" value="Buy Subscription" onclick="@("window.location.href='" + @Url.Action("CreateCheckoutSession", "Payment" ) + "'");" />
+                            @*<button class="btn btn-lg">Contact</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
         <p class="tc">
             * Offline meetings are only applicable to partners based in <strong> India</strong>
             @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
@@ -625,7 +628,7 @@
                         </section>
                         <!-- Section: Social media -->
                     </div>
-                   
+
                 </footer>
 
             </div>
