@@ -48,6 +48,11 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+    @*<div class="form-group">
+        <label asp-for="RegisterUser.Password"></label>
+        <input type="password" asp-for="RegisterUser.Password" class="form-control" placeholder="Enter Password" oninput="validateField()" id="password" />
+        <span asp-validation-for="RegisterUser.Password" class="text-danger"></span>
+    </div>*@
     <div class="form-group">
         @Html.Label("user Role", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -57,11 +62,32 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default "  value="Register" />
+            <input type="submit" class="btn btn-default "  value="Register"  />
         </div>
     </div>
 }
 
 @section Scripts {
+    @*<script>
+        function validateField() {
+            if (document.getElementById("firstname").value === '' || document.getElementById("lastname").value === ''
+                || document.getElementById("input-phone").value === '' || document.getElementById("txtEmailId").value === ''
+                || document.getElementById("txtUserName").value === '' || document.getElementById("dobdate").value === ''
+                || document.getElementById("date").value === '' || document.getElementById("Country").value === ''
+                || document.getElementById("State").value === '' || document.getElementById("City").value === ''
+                || document.getElementById("Street").value === '' || document.getElementById("address").value === ''
+                || document.getElementById("postalcode").value === '' || document.getElementById("password").value === ''
+                || document.getElementById("confirmpassword").value === '' || document.getElementById("postalcode").value === ''
+                || document.getElementById("logopic").value === '' || document.getElementById("profilepic").value === ''
+                || document.getElementById("postalcode").value === '' || document.getElementById("mgender").checked == false && document.getElementById("fgender").checked == false
+            ) {
+                document.getElementById("Submit").disabled = true
+            }
+            else {
+                document.getElementById("Submit").disabled = false
+            }
+    </script>*@
     @Scripts.Render("~/bundles/jqueryval")
+
+
 }

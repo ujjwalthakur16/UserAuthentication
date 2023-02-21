@@ -590,6 +590,7 @@
     <Content Include="Views\Carts\empty.cshtml" />
     <Content Include="Views\OrderViewModel\Index.cshtml" />
     <Content Include="Views\OrderViewModel\OrderDetails.cshtml" />
+    <Content Include="Views\OrderViewModel\_OrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

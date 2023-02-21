@@ -84,13 +84,25 @@ namespace UserAuthentication.Controllers
             return RedirectToAction("Index", new { id=order.Id});
         }
 
+        public ActionResult Sort()
+        {
+            var u = User.Identity.GetUserId();
+
+            var invoice = new OrderViewModel
+            {
+                order = db.Order.Where(x => x.UserId == u).OrderByDescending(y=>y.Date).ToList(),
+                orderDetails = db.OrderDetail.Where(x => x.Order.UserId == u).ToList()
+            };
+            return PartialView("name Partial", invoice);
+        }
+
         public ActionResult OrderDetails(int? id)
         {
             var u = User.Identity.GetUserId();
 
             var invoice = new OrderViewModel
             {
-                order = db.Order.Where(x => x.UserId == u).ToList(),
+                order = db.Order.Where(x => x.UserId == u).OrderByDescending(y => y.Id).ToList(),
                 orderDetails = db.OrderDetail.Where(x => x.Order.UserId == u).ToList()
             };
             return View(invoice);
