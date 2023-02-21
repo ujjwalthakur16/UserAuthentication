@@ -109,30 +109,32 @@
                         {
                             <img class="card-img-top rounded" style="margin-left: 15%; margin-bottom: 10px; height: 16pc; margin-top: 10px; " src="~/Images/No_Image.png" />
                         }
-                        <div class="pl-1">
-                            <p class="card-title h5"><b style="color:#2c3e50">@product.Name</b></p>
-                            @if (product.Created_by != null)
-                            {
-                                <p class="card-title text-primary">by <b>@product.Created_by</b></p>
-                            }
-                            else
-                            {
-                                <p class="card-title text-primary">by <b>Unknown </b></p>
-                            }
-                        </div>
+                        <div style=" margin-left: 10px;">
+                            <div class="pl-1">
+                                <p class="card-title h5"><b style="color:#2c3e50">@product.Name</b></p>
+                                @if (product.Created_by != null)
+                                {
+                                    <p class="card-title text-primary">by <b>@product.Created_by</b></p>
+                                }
+                                else
+                                {
+                                    <p class="card-title text-primary">by <b>Unknown </b></p>
+                                }
+                            </div>
 
-                        <div style="padding-left:5px;">
-                            <p>List Price: <strike><b class="">$ @product.MRP.ToString()</b></strike></p>
-                        </div>
-                        <div style="padding-left:5px;">
-                            <p style="color:maroon">Price For 2: <b class="">$ @product.PriceOf_2</b></p>
-                        </div>
+                            <div style="padding-left:5px;">
+                                <p>List Price: <strike><b class="">$ @product.MRP.ToString()</b></strike></p>
+                            </div>
+                            <div style="padding-left:5px;">
+                                <p style="color:maroon">Price For 2: <b class="">$ @product.PriceOf_2</b></p>
+                            </div>
 
-                        <div style="padding-left:5px;">
-                            <p style="color:maroon">1 Piece After Discount: <b class="">@product.Diccounted_MRP</b></p>
+                            <div style="padding-left:5px;">
+                                <p style="color:maroon">1 Piece After Discount: <b class="">@product.Diccounted_MRP</b></p>
+
+                            </div>
 
                         </div>
-
                     </div>
                     <div>
                         <a href="@Url.Action("AddToCart","Carts",new { id = product.ID })" class="btn btn-primary form-control">

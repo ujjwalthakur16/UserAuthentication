@@ -35,35 +35,7 @@
                 <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
                     <div class="card" style="border:0px;">
 
-                        @*@switch (product.Name)
-                        {
-                            case ("Romantic Books"):
-                                if (product.Picture != null)
-                                {
-                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/sub/@product.Picture" />
-
-                                }
-                                else
-                                {
-
-                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/Subcatogeries/half-girlfriend.jpg" />
-                                }
-                                break;
-
-                            case ("Action Games"):
-                                if (product.Picture != null)
-
-                                {
-                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 15%; height: 10pc;" src="~/Categories/@product.Picture" />
-
-                                }
-                                else
-                                {
-
-                                    <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 8%; height: 10pc;" src="~/Subcatogeries/Pubg.jpg" />
-                                }
-                                break;
-                        }*@
+                       
                         @if (product.Picture != null)
 
                         {
@@ -74,16 +46,16 @@
                         {
                             <img class="card-img-top rounded" style="margin-top: 10px; margin-left: 8%; height: 10pc;" src="~/Images/No_Image.png" />
                         }
-                        <div class="pl-1">
+                        <div class="pl-1" >
                             <p class="card-title h5"><b style=" margin-left: 38%; font-size: 23px; color: #2c3e50">@product.Name</b></p>
                             @if (product.CreatedBy != null)
                             {
-                                <p class="card-title text-primary">by <b>@product.CreatedBy</b></p>
+                                <p class="card-title text-primary" style=" margin-left: 10px;">by <b>@product.CreatedBy</b></p>
 
                             }
                             else
                             {
-                                <p class="card-title text-primary">by <b>Unknown </b></p>
+                                <p class="card-title text-primary" style="margin-left: 10px;">by <b>Unknown </b></p>
 
                             }
                         </div>
@@ -91,7 +63,7 @@
                     </div>
                     <div>
                         @*@Html.ActionLink("Deatails", "Details", new { id = product.ID  })*@
-                        @Html.ActionLink("Details", "Menu", "Products", new { id = product.ID }, new { @class = "btn btn-primary form-control" })
+                        @Html.ActionLink("Details", "Menu", "Products", new { id = product.ID }, new { @class = "btn btn-primary form-control", target = "_blank" })
                         <span class="Links"> @Html.ActionLink("Edit", "Edit", new { id = product.ID })</span>
 
                         @*<a href="/Products/Menu/@product.ID" class="btn btn-primary form-control">Details</a>*@
