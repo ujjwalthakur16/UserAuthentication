@@ -84,16 +84,40 @@ namespace UserAuthentication.Controllers
             return RedirectToAction("Index", new { id=order.Id});
         }
 
-        public ActionResult Sort()
+        public ActionResult lastOrder()
+        {
+            var u = User.Identity.GetUserId();
+            //var order = db.Order.Where(x => x.UserId == u).LastOrDefault();
+
+            var invoice = new OrderViewModel
+            {
+                order = db.Order.Where(x=>x.UserId==u).OrderByDescending(x=>x.Id).Take(1).ToList(),
+                orderDetails = db.OrderDetail.Where(x => x.Order.UserId == u).ToList()
+            };
+            return PartialView("_OrderDetails", invoice);
+        }
+        public ActionResult lastSeven()
         {
             var u = User.Identity.GetUserId();
 
             var invoice = new OrderViewModel
             {
-                order = db.Order.Where(x => x.UserId == u).OrderByDescending(y=>y.Date).ToList(),
+                order = db.Order.Where(x => x.UserId == u ).OrderByDescending(x => x.Id).Take(7).ToList(),
                 orderDetails = db.OrderDetail.Where(x => x.Order.UserId == u).ToList()
             };
-            return PartialView("name Partial", invoice);
+            return PartialView("_OrderDetails", invoice);
+        }
+
+        public ActionResult lastMonth()
+        {
+            var u = User.Identity.GetUserId();
+            var lastMonth = DateTime.Now.AddMonths(-1);
+            var invoice = new OrderViewModel
+            {
+                order = db.Order.Where(x => x.UserId == u && x.Date >= lastMonth).OrderByDescending(x => x.Id).ToList(),
+                orderDetails = db.OrderDetail.Where(x => x.Order.UserId == u).ToList()
+            };
+            return PartialView("_OrderDetails", invoice);
         }
 
         public ActionResult OrderDetails(int? id)

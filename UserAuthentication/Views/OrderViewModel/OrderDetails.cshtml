@@ -43,22 +43,56 @@
         <button class="btn btn-primary dropdown-toggle" style="position:relative; left: 709px;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort</button>
         <!--<button class="btn btn-primary dropdown-toggle" data-sort="none"><i class="fa fa-sort"></i></button>--><!-- .dropdown-toggle adds rounded borders and reduces padding. It does not trigger dropdowns. -->
         <ul class="dropdown-menu" style="left: 709px;">
-            <li><a href="#" tabindex="-1" onclick="sort()" data-type="alpha">latest order</a></li>
+            <li><a href="#" tabindex="-1" onclick="sort()" data-type="alpha">last order</a></li>
+            <li><a href="#" tabindex="-1" onclick="sortasc()" data-type="alpha">last 7 orders</a></li>
+            <li><a href="#" tabindex="-1" onclick="lastMonth()" data-type="alpha">past 1 month orders</a></li>
             @*<li><a href="#" tabindex="-1" data-type="numeric">Date</a></li>*@
         </ul>
     </div>
 </div>
-@Html.Partial("_OrderDetails", Model);
+<div id="partialDiv">
+
+@Html.Partial("_OrderDetails", Model)
+</div>
 @section Scripts{
     <script>
         function sort() {
             debugger;
             $.ajax({
-                type: "get",
-                url: "/OrderViewModel/Sort",
+                type: "post",
+                url: "/OrderViewModel/lastOrder",
                 success: function (data) {
-                    alert('Successfully data recieved');
-                    console.log(data);
+                    $('#partialDiv').html(data);
+
+                },
+                error: function () {
+                    alert('failed to received the data');
+                    console.log('failed');
+                }
+            })
+        }
+        function sortasc() {
+            debugger;
+            $.ajax({
+                type: "post",
+                url: "/OrderViewModel/lastSeven",
+                success: function (data) {
+                    $('#partialDiv').html(data);
+
+                },
+                error: function () {
+                    alert('failed to received the data');
+                    console.log('failed');
+                }
+            })
+        }
+        function lastMonth() {
+            debugger;
+            $.ajax({
+                type: "post",
+                url: "/OrderViewModel/lastMonth",
+                success: function (data) {
+                    $('#partialDiv').html(data);
 
                 },
                 error: function () {
