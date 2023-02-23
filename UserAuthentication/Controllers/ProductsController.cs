@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,8 +40,6 @@ namespace UserAuthentication.Controllers
             return View(products);
         }
 
-        
-
         //public ActionResult Search(string searchvalue)
         //{
         //    return View();
@@ -66,33 +63,58 @@ namespace UserAuthentication.Controllers
             if (ModelState.IsValid)
             {
                 var FileName = Path.GetFileName(Image.FileName);
+
                 var ImagePath = Path.Combine(Server.MapPath("~/Images/"), FileName);
+                
                 Image.SaveAs(ImagePath);
+                
                 var u = User.Identity.GetUserId();
+                
                 var usr = db.Users.Where(x => x.Id == u).SingleOrDefault();
+                
                 Products category1 = new Products();
+                
                 category1.Name = products.Name;
+                
                 category1.Created_by = usr.FirstName +" "+ usr.LastName;
+                
                 category1.CreatedDate = DateTime.Now;
+                
                 category1.ModifiedDate = DateTime.Now;
+                
                 category1.MRP = products.MRP;
+                
                 category1.Discount = products.Discount + "%";
+                
                 category1.DiscountTo = "Subscriber Only";
+                
                 category1.DiscountFromDate = DateTime.Now;
+                
                 category1.DiscountToDate = DateTime.Now.AddDays(20);
+                
                 category1.Discription = products.Discription;
+                
                 category1.SubCategoryId = products.SubCategoryId;
+                
                 category1.Picture = FileName;
+                
                 var dis = (Convert.ToInt32(products.MRP) * Convert.ToInt32(products.Discount)) / 100;
+                
                 category1.Diccounted_MRP = Convert.ToInt32(products.MRP) - dis;
+                
                 var dis2 = ((Convert.ToInt32(products.MRP) + Convert.ToInt32(products.MRP)) * 25) / 100;
+                
                 category1.PriceOf_2 = (Convert.ToInt32(products.MRP)*2) - dis2;
+                
                 if (category1.Created_by == "")
                 {
                     category1.Created_by = usr.UserName;
                 }
+                
                 db.Products.Add(category1);
+                
                 db.SaveChanges();
+                
                 return RedirectToAction("Menu");
             }
 
@@ -115,11 +137,14 @@ namespace UserAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Products products = db.Products.Find(id);
+            
             if (products == null)
             {
                 return HttpNotFound();
             }
+            
             ViewBag.SubCategoryId = new SelectList(db.SubCategory, "ID", "Name", products.SubCategoryId);
             return View(products);
         }
@@ -134,19 +159,27 @@ namespace UserAuthentication.Controllers
             if (ModelState.IsValid)
             {
                 var u = User.Identity.GetUserId();
+                
                 var usr = db.Users.Where(x => x.Id == u).SingleOrDefault();
+                
                 var category1 = db.Products.Where(x => x.ID == id).SingleOrDefault();
+                
                 category1.Name = products.Name;
-                //Created_by = usr.FirstName + usr.LastName,
-                //CreatedDate = DateTime.Now,
+                
                 category1.ModifiedDate = DateTime.Now;
+                
                 category1.MRP = products.MRP;
+                
                 category1.Discount = products.Discount;
+                
                 category1.DiscountTo = "Subscriber Only";
+                
                 category1.DiscountFromDate = DateTime.Now;
+                
                 category1.DiscountToDate = DateTime.Now.AddDays(20);
+                
                 category1.Discription = products.Discription;
-                //SubCategoryId = products.SubCategoryId
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -168,8 +201,6 @@ namespace UserAuthentication.Controllers
         }
         public ActionResult Cart(int? id)
         {
-
-            //var crt = db.Products.Where(x => x.SubCategory.CategoryId == id).ToList();
             var p = db.Products.Where(x => x.ID == id).Include(s => s.SubCategory).ToList();
             return View(p);
         }
