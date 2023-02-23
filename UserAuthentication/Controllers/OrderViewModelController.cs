@@ -46,7 +46,6 @@ namespace UserAuthentication.Controllers
             var crt = db.Cart.Where(x => x.userID == addrs.UserId).ToList();
             Order order = new Order();
             order.UserId = addrs.UserId;
-            
             order.AddressId = addrs.Id;
             order.Date= DateTime.Now.Date;
             order.DiscountPercent = 0;

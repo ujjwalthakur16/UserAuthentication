@@ -41,9 +41,12 @@ namespace UserAuthentication.Controllers
             return View(products);
         }
 
-        //public ActionResult Search()
+        
+
+        //public ActionResult Search(string searchvalue)
         //{
-        //    return Json(new { data = _unitOfWork.Product.GetAll(), datacategory = _unitOfWork.Category.GetAll() });
+        //    return View();
+            
         //}
 
         // GET: Products/Create
@@ -98,10 +101,12 @@ namespace UserAuthentication.Controllers
         }
 
         //[HttpGet]
-        //public ActionResult Search()
-        //{
-        //    return Json(new { data = db.Products.ToList(), datacategory = db.Category.ToList() });
-        //}
+        public ActionResult Search(string searchvalue)
+        {
+            var products = db.Products.Include(p => p.SubCategory).ToList();
+            //return View(products.ToList());
+            return PartialView("_Menu", products);
+        }
 
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)

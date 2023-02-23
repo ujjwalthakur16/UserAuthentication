@@ -63,7 +63,7 @@
                     </div>
                     <div>
                         @*@Html.ActionLink("Deatails", "Details", new { id = product.ID  })*@
-                        @Html.ActionLink("Details", "Menu", "Products", new { id = product.ID }, new { @class = "btn btn-primary form-control", target = "_blank" })
+                        @Html.ActionLink("Details", "Menu", "Products", new { id = product.ID }, new { @class = "btn btn-primary form-control"})
                         <span class="Links"> @Html.ActionLink("Edit", "Edit", new { id = product.ID })</span>
 
                         @*<a href="/Products/Menu/@product.ID" class="btn btn-primary form-control">Details</a>*@
